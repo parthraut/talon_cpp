@@ -1,8 +1,11 @@
 function <user.type_var>:
 	user.insert_between("{type_var}(", ") {\n\t\n}")
 
-loop while:
+while:
 	user.insert_between("while (", ") {\n\t\n}")
+
+for loop:
+	user.insert_between("for (", ";;) {\n\t\n}")
 
 <user.type_var>: "{type_var}"
 
@@ -10,14 +13,13 @@ loop while:
 
 {user.logical_ops}: "{logical_ops}"
 
-assign: " = "
-
+set to: " = "
+scope: "::"
 
 parens:
 	user.insert_between("(", ")")
 
 next: ";\n"
-
 
 # unary functions
 increment <word>: "++{word}"
@@ -27,12 +29,13 @@ decrement <word>: "--{word}"
 dereference <word>:
 	"*{word}"
 
-<word>: "{word}"
+# vector1:
+vector [of] [{user.c_types}]:
+	"vector<{c_types}>"
 
-Void buggy(int * array, int size) {
-	int * pot = array + size - 1;
-	while ((pot != array) && (pot <= array) && (array <= array + size - 1)) {
-	
-}
-}
+dot {user.vec_funcs}:
+	".{vec_funcs}()"
+
+[at] index:
+	user.insert_between("[", "]")
 
