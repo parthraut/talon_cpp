@@ -1,11 +1,17 @@
+### control flow ###
 function <user.type_var>:
-	user.insert_between("{type_var}(", ") {\n\t\n}")
+	user.insert_between("{type_var}(", ") {\n\t\n")
 
 while:
-	user.insert_between("while (", ") {\n\t\n}")
+	user.insert_between("while (", ") {\n\t\n")
 
 for loop:
-	user.insert_between("for (", ";;) {\n\t\n}")
+	user.insert_between("for (", ";;) {\n\t\n")
+
+if:
+	user.insert_between("if (", ") {\n\t\n ")
+else:
+	user.insert_between("else {\n\t","\n")
 
 <user.type_var>: "{type_var}"
 
@@ -18,23 +24,43 @@ scope: "::"
 
 parens:
 	user.insert_between("(", ")")
+braces:
+	user.insert_between("{", "}")
+curly brackets:
+	user.insert_between("{", "}")
+brackets:
+	user.insert_between("[", "]")
+square brackets:
+	user.insert_between("[", "]")
 
 next: ";\n"
 
-# unary functions
-increment <word>: "++{word}"
+#### unary functions ###
+increment <user.snk>: "++{snk}"
 
-decrement <word>: "--{word}"
+decrement <user.snk>: "--{snk}"
 
-dereference <word>:
-	"*{word}"
+dereference <user.snk>:
+	"*{snk}"
 
-# vector1:
-vector [of] [{user.c_types}]:
-	"vector<{c_types}>"
+### vectors ###
+vector [of] {user.c_types} [<user.snk>]:
+	insert("vector<")
+	insert(c_types)
+	insert("> ")
+	insert(snk or "")
 
-dot {user.vec_funcs}:
-	".{vec_funcs}()"
+vector [of] vector [of] {user.c_types} [<user.snk>]:
+	insert("vector<vector<")
+	insert(c_types)
+	insert("> > ")
+	insert(snk or "")
+
+dot {user.vec_funcs_with_args}:
+	user.insert_between(".{vec_funcs_with_args}(",")")
+
+dot {user.vec_funcs_no_args}:
+	insert(".{vec_funcs_no_args}(",")")
 
 [at] index:
 	user.insert_between("[", "]")

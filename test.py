@@ -16,6 +16,14 @@ ctx.lists["user.c_types"] = {
     "struck": "struct",
     "num": "enum",
     "float": "float",
+    "auto": "auto",
+    "otto": "auto",
+}
+
+ctx.lists["user.containers"] = {
+    "vector" : "vector",
+    "deck" : "deque",
+    "list" : "list",
 }
 
 ctx.lists["user.c_pointers"] = {
@@ -51,25 +59,27 @@ ctx.lists["user.logical_ops"] = {
     
 }
 
-ctx.lists["user.vec_funcs"] = {
+ctx.lists["user.vec_funcs_no_args"] = {
     "begin" : "begin",
     "end" : "end",
     "size" : "size",
-    "resize" : "resize",
     "capacity" : "capacity",
     "empty" : "empty",
-    "reserve" : "reserve",
-    "at" : "at",
     "back" : "back",
     "front" : "front",
     "data" : "data",
+    "clear" : "clear",
+}
+
+ctx.lists["user.vec_funcs_with_args"] = {
+    "reserve" : "reserve",
+    "at" : "at",
     "assign" : "assign",
     "push back" : "push_back",
     "pop back" : "pop_back",
     "insert" : "insert",
     "erase" : "erase",
     "swap" : "swap",
-    "clear" : "clear",
     "emplace" : "emplace",
     "emplace back" : "emplace_back",
 }
@@ -78,7 +88,10 @@ mod.list("c_types", desc="regular c types")
 mod.list("c_pointers", desc="* and ** etc")
 mod.list("math_ops", desc="+-/*")
 mod.list("logical_ops", desc="=, < , >= ...")
-mod.list("vec_funcs", desc="common vector functions")
+mod.list("containers", desc="some common stl containers")
+mod.list("vec_funcs_no_args", desc="common vector functions - place cursor after")
+mod.list("vec_funcs_with_args", desc="common vector functions - place cursor in parens")
+
 
 identifiers = {}
 
