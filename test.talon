@@ -1,26 +1,24 @@
 
-
-
-
-
-
-
-
-
 ### control flow ###
-function <user.type_var>:
-	user.insert_between("{type_var}(", ") {\n\t\n")
+make function:
+	" () {"
+	key(enter up cmd-right left left left)
 
-while:
-	user.insert_between("while (", ") {\n\t\n")
+while loop:
+	"while () {"
+	key(enter up cmd-right left left left)
 
 for loop:
-	user.insert_between("for (", ";;) {\n\t\n")
+	"for (;;) {"
+	key(enter up cmd-right left left left left left)
 
 if:
-	user.insert_between("if (", ") {\n\t\n ")
+	"if () {"
+	key(enter up cmd-right left left left)
+
 else:
-	user.insert_between("else {\n\t","\n")
+	"else {"
+	key(enter)
 
 <user.type_var>: "{type_var}"
 
@@ -28,49 +26,130 @@ else:
 
 {user.logical_ops}: "{logical_ops}"
 
-set to: " = "
+equeft: " = "
+
+standard:
+	"std"
+
 scope: "::"
 
 parens:
-	user.insert_between("(", ")")
-braces:
-	user.insert_between("{", "}")
-curly brackets:
-	user.insert_between("{", "}")
-brackets:
-	user.insert_between("[", "]")
-square brackets:
-	user.insert_between("[", "]")
+	"()"
+	key(left)
 
-next: ";\n"
+braces:
+	"{}"
+	key(left)
+
+curly brackets:
+	"{}"
+	key(left)
+
+brackets:
+	"[]"
+	key(left)
+
+square brackets:
+	"[]"
+	key(left)
+
+next: 
+	";"
+	key(enter)
 
 #### unary functions ###
-increment <user.snk>: "++{snk}"
+increment <user.format_text>:
+	"++{format_text}"
 
-decrement <user.snk>: "--{snk}"
+decrement <user.format_text>: 
+	"--{format_text}"
 
-dereference <user.snk>:
-	"*{snk}"
+dereference <user.format_text>:
+	"*{format_text}"
 
 ### vectors ###
-vector [of] {user.c_types} [<user.snk>]:
+vector [of] {user.c_types}:
 	insert("vector<")
 	insert(c_types)
 	insert("> ")
-	insert(snk or "")
 
-vector [of] vector [of] {user.c_types} [<user.snk>]:
+vector [of] vector [of] {user.c_types}:
 	insert("vector<vector<")
 	insert(c_types)
 	insert("> > ")
-	insert(snk or "")
 
 dot {user.vec_funcs_with_args}:
-	user.insert_between(".{vec_funcs_with_args}(",")")
+	".{vec_funcs_with_args}()"
+	key(left)
 
 dot {user.vec_funcs_no_args}:
-	insert(".{vec_funcs_no_args}(",")")
+	".{vec_funcs_no_args}()"
 
 [at] index:
-	user.insert_between("[", "]")
+	"[]"
+	key(left)
+
+### string ### 
+
+string:
+	"string"
+
+literal:
+	""" "" """
+
+put to: 
+	"<<"
+
+get from:
+	">>"
+
+(sea | see) out:
+	"cout"
+
+(sea | see) in:
+	"cin"
+
+sin:
+	"cin"
+
+(end | and | on) line:
+	"endl"
+
+input stream:
+	"istream"
+
+output stream:
+	"ostream"
+
+input output stream:
+	"iostream"
+
+io stream:
+	"iostream"
+
+file stream:
+	"fstream"
+
+input file stream:
+	"ifstream"
+
+output file stream:
+	"ofstream"
+
+string stream:
+	"stringstream"
+
+input string stream:
+	"istringstream"
+
+output string stream:
+	"ostringstream"
+
+### preludes ###
+
+include {user.headers}:
+	"#include<{headers}>\n"
+
+using:
+	"using namespace "
 

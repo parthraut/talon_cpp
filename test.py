@@ -3,6 +3,23 @@ from talon import Context, Module, actions, settings
 mod = Module()
 ctx = Context()
 
+ctx.lists["user.headers"] = {
+    "vector": "vector",
+    "assert": "assert.h",
+    "math": "math.h",
+    "exception": "exception",
+    "string": "string",
+    "list": "lsit",
+    "deque": "deque",
+    "map": "map",
+    "unordered map": "unordered_map",
+    "iterator": "iterator",
+    "see math": "cmath",
+    "io stream": "iostream",
+    "file stream": "fstream",
+    "string stream": "sstream",
+}
+
 ctx.lists["user.c_types"] = {
     "character": "char",
     "char": "char",
@@ -59,7 +76,7 @@ ctx.lists["user.logical_ops"] = {
     
 }
 
-ctx.lists["user.vec_funcs_no_args"] = {
+ctx.lists["user.methods_no_args"] = {
     "begin" : "begin",
     "end" : "end",
     "size" : "size",
@@ -69,9 +86,11 @@ ctx.lists["user.vec_funcs_no_args"] = {
     "front" : "front",
     "data" : "data",
     "clear" : "clear",
+    "length" : "length",
+    "len" : "length"
 }
 
-ctx.lists["user.vec_funcs_with_args"] = {
+ctx.lists["user.methods_with_args"] = {
     "reserve" : "reserve",
     "at" : "at",
     "assign" : "assign",
@@ -84,6 +103,7 @@ ctx.lists["user.vec_funcs_with_args"] = {
     "emplace back" : "emplace_back",
 }
 
+mod.list("headers", desc="some commonly included headers (vector, iostream, assert etc)")
 mod.list("c_types", desc="regular c types")
 mod.list("c_pointers", desc="* and ** etc")
 mod.list("math_ops", desc="+-/*")
@@ -95,23 +115,8 @@ mod.list("vec_funcs_with_args", desc="common vector functions - place cursor in 
 
 identifiers = {}
 
-@mod.capture(rule="{self.c_types} [{self.c_pointers}] <self.snk>")
+@mod.capture(rule="[static] [const] {self.c_types} [{self.c_pointers}]")
 def type_var(m) -> str:
-    identifiers[m.snk] = True
     return m
-    
-@mod.capture(rule="add variable <self.snk>")
-def add(m) -> str:
-    identifiers[m.snk] = True
-    return "adding " + m.snk
-    
-@mod.capture(rule="check <self.snk>")
-def check(m) -> str:
-    if m.snk in identifiers.keys():
-        return "found!!!"
-    else:
-        return "not found :(("
 
-@mod.capture(rule="<self.text>")
-def snk(m) -> str:
-    return m.text.replace(" ", "_")
+
