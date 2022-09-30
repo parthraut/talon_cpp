@@ -20,7 +20,7 @@ else:
 	"else {"
 	key(enter)
 
-<user.type_var>: "{type_var}"
+<user.type_var>: "{type_var} "
 
 {user.math_ops}: "{math_ops}"
 
