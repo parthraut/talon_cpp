@@ -35,6 +35,8 @@ ctx.lists["user.c_types"] = {
     "float": "float",
     "auto": "auto",
     "otto": "auto",
+    "bool": "bool",
+    "boolean": "bool",
 }
 
 ctx.lists["user.containers"] = {
@@ -54,11 +56,15 @@ ctx.lists["user.c_pointers"] = {
 ctx.lists["user.math_ops"] = {
     "plus": " + ",
     "minus": " - ",
+    "subtract" : " - ",
     "divide": " / ",
     "divide by": " / ",
     "slash": " / ",
     "times": " * ",
     "multiplied by": " * ",
+    "modulo" : " % ",
+    "modular" : " % ",
+    "module" : " % ",
 }
 
 ctx.lists["user.logical_ops"] = {
@@ -71,8 +77,15 @@ ctx.lists["user.logical_ops"] = {
     "greater [than]": " > ",
     "greater or equal": " >= ",
     "less or equal": " <= ",
-    "and": " && ",
-    "or": " || ",
+
+    "bitwise and": " && ",
+    "bitwise or": " || ",
+    "bitwise not": "~",
+
+    "logical and": "&",
+    "logical or": "|",
+    "logical not": "!",
+
     
 }
 

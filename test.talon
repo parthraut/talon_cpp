@@ -153,3 +153,11 @@ include {user.headers}:
 using:
 	"using namespace "
 
+comment line <self.format_text>:
+	"// {format_text}"
+
+comment paragraph <user.format_text>:
+    "/* {form} */"
+
+	
+
