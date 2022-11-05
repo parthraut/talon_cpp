@@ -1,26 +1,66 @@
 
 ### control flow ###
 make function:
-	" () {"
-	key(enter up cmd-right left left left)
+	# " () {"
+	# key(enter up fn-right left left left)
+
+	user.insert_between(" (", ") {")
+
 
 while loop:
-	"while () {"
-	key(enter up cmd-right left left left)
+	user.insert_between("while (", ") {")
 
 for loop:
-	"for (;;) {"
-	key(enter up cmd-right left left left left left)
+	user.insert_between("for (", "; ; ) {")
 
 if:
-	"if () {"
-	key(enter up cmd-right left left left)
-
+	user.insert_between("if (", ") {")
+	
 else:
 	"else {"
 	key(enter)
 
-<user.type_var>: "{type_var} "
+{self.c_types} [{self.c_pointers}] <user.text>:
+	ptr = c_pointers or " "
+	ptr = " " + ptr
+	ptr = ptr + " "
+	text = user.snk(text)
+	text = ptr + text
+	text = c_types + text
+	insert(text)
+
+static {self.c_types} [{self.c_pointers}] <user.text>:
+	ptr = c_pointers or " "
+	ptr = " " + ptr
+	ptr = ptr + " "
+	text = user.snk(text)
+	text = ptr + text
+	text = c_types + text
+	text = "static " + text
+	insert(text)
+
+(const | constant) {self.c_types} [{self.c_pointers}] <user.text>:
+	ptr = c_pointers or " "
+	ptr = " " + ptr
+	ptr = ptr + " "
+	text = user.snk_cap(text)
+	text = ptr + text
+	text = c_types + text
+	text = "const " + text
+	insert(text)
+
+(const | constant) static {self.c_types} [{self.c_pointers}] <user.text>:
+	ptr = c_pointers or " "
+	ptr = " " + ptr
+	ptr = ptr + " "
+	text = user.snk_cap(text)
+	text = ptr + text
+	text = c_types + text
+	text = "static " + text
+	text = "const " + text
+	insert(text)
+
+
 
 {user.math_ops}: "{math_ops}"
 
@@ -58,14 +98,30 @@ next:
 	key(enter)
 
 #### unary functions ###
-increment <user.format_text>:
-	"++{format_text}"
+increment <user.text>:
+	text = user.snk(text)
+	text = "++" + text
+	insert(text)
 
-decrement <user.format_text>: 
-	"--{format_text}"
+decrement <user.text>: 
+	text = user.snk(text)
+	text = "--" + text
+	insert(text)
 
-dereference <user.format_text>:
-	"*{format_text}"
+dereference <user.text>:
+	text = user.snk(text)
+	text = "*" + text
+	insert(text)
+
+reference <user.text>:
+	text = user.snk(text)
+	text = "&" + text
+	insert(text)
+
+follow to <user.text>:
+	text = user.snk(text)
+	text = "->" + text
+	insert(text)
 
 ### vectors ###
 vector [of] {user.c_types}:
@@ -78,12 +134,12 @@ vector [of] vector [of] {user.c_types}:
 	insert(c_types)
 	insert("> > ")
 
-dot {user.vec_funcs_with_args}:
-	".{vec_funcs_with_args}()"
+dot {user.methods_with_args}:
+	insert(".{methods_with_args}()")
 	key(left)
 
-dot {user.vec_funcs_no_args}:
-	".{vec_funcs_no_args}()"
+dot {user.methods_no_args}:
+	".{methods_no_args}()"
 
 [at] index:
 	"[]"
@@ -153,11 +209,41 @@ include {user.headers}:
 using:
 	"using namespace "
 
-comment line <self.format_text>:
-	"// {format_text}"
+comment line:
+	# text = text
+	# modified = "// " + text
+	# modified = modified + " ##"
+	text = "// "
+	insert(text)
+	mode.enable("dictation")
 
-comment paragraph <user.format_text>:
-    "/* {form} */"
+comment paragraph:
+    "/* \n"
+	key(up right right righ 10 theat)
+	mode.enable("dictation")
 
-	
+### pre-processor commands ###
+if ((not defined) | (undefined) | undef):
+	text = "#ifndef\n\n"
+	text = text + "#endif"
+	insert(text)
 
+define:
+	"#define "
+
+### generic Classes, methods etc ###
+
+public:
+	"public:\n"
+
+private:
+	"private:\n"
+
+protected:
+	"protected:\n"
+
+class <user.text>:
+	text = user.first_cap(text)
+	text = "class " + text
+	text = text + " {\n"
+	insert(text)

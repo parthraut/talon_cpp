@@ -1,5 +1,5 @@
 from talon import Context, Module, actions, settings
-
+import string
 mod = Module()
 ctx = Context()
 
@@ -60,7 +60,6 @@ ctx.lists["user.math_ops"] = {
     "divide": " / ",
     "divide by": " / ",
     "slash": " / ",
-    "times": " * ",
     "multiplied by": " * ",
     "modulo" : " % ",
     "modular" : " % ",
@@ -122,14 +121,32 @@ mod.list("c_pointers", desc="* and ** etc")
 mod.list("math_ops", desc="+-/*")
 mod.list("logical_ops", desc="=, < , >= ...")
 mod.list("containers", desc="some common stl containers")
-mod.list("vec_funcs_no_args", desc="common vector functions - place cursor after")
-mod.list("vec_funcs_with_args", desc="common vector functions - place cursor in parens")
+mod.list("methods_no_args", desc="common vector functions - place cursor after")
+mod.list("methods_with_args", desc="common vector functions - place cursor in parens")
 
 
 identifiers = {}
 
-@mod.capture(rule="[static] [const] {self.c_types} [{self.c_pointers}]")
+@mod.capture(rule="[static] {self.c_types} [{self.c_pointers}] ")
 def type_var(m) -> str:
     return m
 
+@mod.action_class
+class Actions:
+    def snk_cap(s: str) -> str:
+        "Snake_it and ALLCAPS IT"
+        return s.upper().replace(" ", "_")
 
+    def snk(s: str) -> str:
+        "snake_it"
+        return s.replace(" ", "_")
+
+    def cap(s:str) -> str:
+        "CAP IT"
+        return s.upper()
+
+    def first_cap(s: str) -> str:
+        "Cap like this"
+        return s.capitalize()
+
+    
